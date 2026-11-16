@@ -1,7 +1,7 @@
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from "node:http";
 import { Readable } from "node:stream";
-import { FREE_MODELS } from "./models";
-import { runChatCompletionsFailover, type ChatCompletionBody } from "./failover";
+import { FREE_MODELS } from "./models.js";
+import { runChatCompletionsFailover, type ChatCompletionBody } from "./failover.js";
 
 export interface StartServerOptions {
   port: number;

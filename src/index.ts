@@ -1,4 +1,4 @@
-import { startServer } from "./server";
+import { startServer } from "./server.js";
 
 const port = Number(process.env.PORT ?? 8787);
 const host = process.env.HOST ?? "0.0.0.0";

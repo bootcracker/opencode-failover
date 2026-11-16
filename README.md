@@ -2,6 +2,39 @@
 
 Automatic failover proxy between OpenCode free models when quota is exhausted.
 
+## CLI (recommended)
+
+The `opencode-failover-bootcracker` CLI wraps `opencode run` and rotates through the free
+models in a circular (round-robin) fashion. The rotation index is persisted, so each invocation
+continues from where the last one stopped. If a model runs out of quota, the CLI automatically
+advances to the next one.
+
+```sh
+npm install
+npm run build
+npm link   # installs the opencode-failover-bootcracker command globally
+```
+
+Commands:
+
+```sh
+opencode-failover-bootcracker run "fix the login bug"
+opencode-failover-bootcracker run -- --continue --format json
+opencode-failover-bootcracker run --start hy4-flash-free "explain this code"
+opencode-failover-bootcracker run --dry-run          # show the next model only
+opencode-failover-bootcracker models                 # list free models, mark the next one
+opencode-failover-bootcracker status                 # show rotation state
+opencode-failover-bootcracker reset [--index n]      # reset rotation
+opencode-failover-bootcracker config                 # print proxy configuration
+opencode-failover-bootcracker serve                  # start the HTTP proxy
+```
+
+`run` options: `--start <id>`, `--attempts <n>`, `--dry-run`, `--verbose`, `--` (pass the
+remaining arguments straight to `opencode run`).
+
+State is stored at `~/.config/opencode-failover-bootcracker/state.json`. The free models are
+available natively as `opencode/<model>`, so no proxy is required for the CLI.
+
 ## How it works
 
 - Exposes an OpenAI-compatible API:

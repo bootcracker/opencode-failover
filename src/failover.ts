@@ -1,4 +1,4 @@
-import { FREE_MODELS, type FailoverModel } from "./models";
+import { FREE_MODELS, type FailoverModel } from "./models.js";
 
 export interface FailoverEnv {
   apiKey: string;
