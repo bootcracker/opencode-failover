@@ -67,11 +67,15 @@ export function startServer(options: StartServerOptions): { server: Server } {
         const body = (await readJson(req)) as ChatCompletionBody;
         const controller = new AbortController();
         const timer = setTimeout(() => controller.abort(), 600_000);
+        const configuredAttempts = Number(process.env.FAILOVER_MAX_ATTEMPTS);
+        const maxAttempts =
+          Number.isFinite(configuredAttempts) && configuredAttempts > 0 ? Math.floor(configuredAttempts) : undefined;
         try {
           const result = await runChatCompletionsFailover({
             apiKey: process.env.OPENCODE_API_KEY ?? "",
             baseUrl: (process.env.OPENCODE_BASE_URL ?? "https://opencode.ai/inference/openai/v1").replace(/\/+$/, ""),
             body,
+            maxAttempts,
             signal: controller.signal,
           });
 
